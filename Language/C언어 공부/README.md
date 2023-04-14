@@ -3,5 +3,5 @@
 
 ## 이곳에 기록했었다..! 
 
-[KingMandoo 깃허브](https://github.com/KingMandooo/C)
+[KingMandoo 깃허브]https://github.com/KingMandooo/C
 
