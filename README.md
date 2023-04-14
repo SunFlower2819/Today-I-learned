@@ -1,4 +1,4 @@
-# Today-I-learn
+# Today-I-learned
 
 ### 2023.04.14 새로운 계정으로 시작
 
