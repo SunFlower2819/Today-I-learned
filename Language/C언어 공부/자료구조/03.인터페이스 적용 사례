@@ -1,0 +1,70 @@
+
+💙 영화 평점 관리 프로그램
+ * 아이템을 파일에서 읽어오기
+ * 모든 아이템 출력
+ * 아이템 하나를 찾아서 출력
+ * 아이템 하나를 찾아서 편집
+...
+
+ 👇👇 추상화
+
+💙 목록(list)의 추상 자료형
+- 객체
+ * 동일한 형태의 데이터 아이템들
+ 
+- 연산
+ * 아이템을 파일에서 읽어오기
+ * 모든 아이템 출력
+ * 아이템 하나를 찾아서 출력
+ ...
+ 
+  👇👇 구현
+ 
+ 💙 목록(list)의 자료 구조
+
+  👇👇 코드 재사용
+ 
+ 💙 새로운 프로그램을 효율적으로 작성
+ 
+----------------------------------------------
+
+데이터(자료)와 자료 구조의 분리
+
+struct movie
+{
+  char title[TSIZE};
+  float rating;
+  struct movie* next;
+}
+
+typedef struct movie* p_movie;
+
+--------------------------  🎈🎈 아래의 코드 처럼 짜야 새로운 재사용하기가 쉽다.
+
+struct movie
+{
+  char title[TSIZE};
+  float rating;
+}
+
+typedef struct movie* p_movie;
+
+typdef struct node
+{
+  Item item;
+  struct node* next;
+} Node;
+
+typdef struct list
+{
+  Node* head;
+  int size;
+} List;
+
+
+
+
+
+
+
+
