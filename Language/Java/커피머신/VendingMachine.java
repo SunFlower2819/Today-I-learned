@@ -163,6 +163,8 @@ public class VendingMachine extends JFrame {
 				int money = cb.ejectBalance();
 				cb.addBalance(-money);
 				balanceField.setText(Integer.toString(cb.ejectBalance()));
+
+				checkButton();
 			}
 		});
 
