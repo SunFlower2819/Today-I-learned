@@ -5,7 +5,7 @@ typedef int Data;
 class _node
 {
 public:
-	_node* next;
+	_node* next; 
 	Data data;
 };
 
