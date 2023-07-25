@@ -44,3 +44,24 @@ void PostorderTraverse(BTreeNode * bt)
 	printf("%d \n", bt->data);
 }
 ```
+
+---
+
+### 🟠문제 08-1
+
+```c
+void DeleteTree(BTreeNode* bt)
+{
+	if(bt == NULL)
+		return;
+
+	DeleteTree(bt->left);
+	DeleteTree(bt->right);
+
+	printf("삭제되는 노드의 데이터: %d \n", bt->data);
+	free(bt);
+}
+```
+
+위의 문제의 핵심은 반드시 **후위 순회** 의 과정을 통해서 노드를 소멸을 진행해야 한다는 것이다! <br>
+그래야 루트 노드가 마지막에 소멸되기 때문이다!!
