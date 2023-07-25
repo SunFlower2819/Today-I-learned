@@ -9,7 +9,7 @@
 ---
 
 ```c
-// 전위 순회
+// 전위 순회 ------------------------------------------------------------
 void PreorderTraverse(BTreeNode * bt, VisitFuncPtr action)
 {
 	if(bt == NULL)
@@ -20,7 +20,7 @@ void PreorderTraverse(BTreeNode * bt, VisitFuncPtr action)
 	PreorderTraverse(bt->right, action);
 }
 
-// 중위 순회
+// 중위 순회 ------------------------------------------------------------
 void InorderTraverse(BTreeNode * bt, VisitFuncPtr action)
 {
 	if(bt == NULL)
@@ -31,7 +31,7 @@ void InorderTraverse(BTreeNode * bt, VisitFuncPtr action)
 	InorderTraverse(bt->right, action);
 }
 
-// 후위 순회
+// 후위 순회 ------------------------------------------------------------
 void PostorderTraverse(BTreeNode * bt, VisitFuncPtr action)
 {
 	if(bt == NULL)
