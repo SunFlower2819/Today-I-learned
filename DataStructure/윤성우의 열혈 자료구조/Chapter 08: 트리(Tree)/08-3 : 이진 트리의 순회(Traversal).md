@@ -8,37 +8,39 @@
 
 ---
 
+코드만 봐도 이해될 것이다.
+
 ```c
 // 전위 순회 ------------------------------------------------------------
-void PreorderTraverse(BTreeNode * bt, VisitFuncPtr action)
+void PreorderTraverse(BTreeNode * bt)
 {
 	if(bt == NULL)
 		return;
 
-	action(bt->data);
+	printf("%d \n", bt->data);
 	PreorderTraverse(bt->left, action);
 	PreorderTraverse(bt->right, action);
 }
 
 // 중위 순회 ------------------------------------------------------------
-void InorderTraverse(BTreeNode * bt, VisitFuncPtr action)
+void InorderTraverse(BTreeNode * bt)
 {
 	if(bt == NULL)
 		return;
 
 	InorderTraverse(bt->left, action);
-	action(bt->data);
+	printf("%d \n", bt->data);
 	InorderTraverse(bt->right, action);
 }
 
 // 후위 순회 ------------------------------------------------------------
-void PostorderTraverse(BTreeNode * bt, VisitFuncPtr action)
+void PostorderTraverse(BTreeNode * bt)
 {
 	if(bt == NULL)
 		return;
 
 	PostorderTraverse(bt->left, action);
 	PostorderTraverse(bt->right, action);
-	action(bt->data);
+	printf("%d \n", bt->data);
 }
 ```
