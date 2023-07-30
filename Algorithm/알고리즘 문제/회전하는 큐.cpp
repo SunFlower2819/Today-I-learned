@@ -8,6 +8,13 @@ public:
 	_node* next;
 	_node* prev;
 	Data data;
+
+	_node()
+	{
+		next = NULL;
+		prev = NULL;
+		data = 0;
+	}
 };
 
 typedef class _node Node;
@@ -89,6 +96,14 @@ void QCreateNode(Queue* plist, Data data)
 		plist->head = newNode;
 		plist->tail = newNode;
 		newNode->next = newNode;
+
+		// 노드가 한개일 경우 노드 한개의 next와 prev가 자기 자신을 가리키고 있어야한다.
+		// 하지만 만약 prev를 설정해주지 않으면
+		// Qdelete() 함수에 있는 plist->head->prev = plist->tail; 와 같은 코드는
+		// NULL = plist->tail; 과 같은 형태를 띄게 된다.
+		// 따라서 아래의 코드를 추가해주지 않아서 런타임 에러 (AccessNullPointer)가 발생한 것이다.
+		// 반례로는 노드가 1인 연결리스트에서 1을 찾을 경우를 입력할 때 0이 출력되지 못한다.
+		newNode->prev = newNode;
 	}
 	else // 두번째 노드를 생성할 때로 진입
 	{
@@ -134,6 +149,12 @@ void Qcompare(Queue* plist, Data num)
 	int leftCount = Qfind_Left(plist, num);
 	int rightCount = Qfind_Right(plist, num);
 
+	if (leftCount == -1 || rightCount == -1)
+	{
+		std::cout << "오류" << std::endl;
+		exit(1);
+	}
+
 	// 더 작은 횟수를 더해준다.
 	if (leftCount >= rightCount)
 		plist->movingCount += rightCount;
@@ -147,10 +168,8 @@ void Qdelete(Queue* plist, Data num)
 	// 더 작은 수를 plist->movingCount에 더한다.
 	Qcompare(plist, num);
 
-	// 그리고 현재 노드의 다음 노드를 head로, 현재 노드의 이전 노드를 tail로 바꿔준다.
-	// 그리고 현재 노드를 제거한다.
-	// 연결 리스트를 이어준다.
 
+	// 연결 리스트를 이어준다.
 	Node* delNode = plist->cur;
 
 	plist->tail = plist->cur->prev;
