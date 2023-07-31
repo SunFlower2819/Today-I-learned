@@ -149,12 +149,6 @@ void Qcompare(Queue* plist, Data num)
 	int leftCount = Qfind_Left(plist, num);
 	int rightCount = Qfind_Right(plist, num);
 
-	if (leftCount == -1 || rightCount == -1)
-	{
-		std::cout << "오류" << std::endl;
-		exit(1);
-	}
-
 	// 더 작은 횟수를 더해준다.
 	if (leftCount >= rightCount)
 		plist->movingCount += rightCount;
