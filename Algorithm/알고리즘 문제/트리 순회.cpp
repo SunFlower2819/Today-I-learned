@@ -37,8 +37,47 @@ public:
 // 2. 중위 순회를 통해 입력된 데이터를 가진 노드를 찾는 연산
 // 3. 전위,중위,후위 순회를 하는 연산
 
+void makeBinaryTree(BTNode* bt, BTData rootData, BTData leftData, BTData rightData)
+{
+	//BTNode* newNode = 중위 순회하여 리턴된 루트 노드(알맞는 데이터 없으면 NULL 반환)
+
+	// 만약 순회하여 리턴된 노드가 없다면, 즉 처음 생성되는 과정이라면
+	// newNode가 맨위의 루트 노드를 가리키게 한다.
+	
+	//if (newNode == NULL)
+	//{
+	//	newNode = bt;
+	//  newNode->data = rootData;
+	//}
+
+	// 왼쪽 노드와 오른쪽 노드도 생성해주는 연산이 필요함. 그리고 아래 과정을 거쳐야함.
+
+	// newNode->leftNode = makeNode();
+	// newNode->rightNode = makeNode();
+	 
+	// newNode->leftNode->Data = leftData;
+	// newNode->rightNode->Data = rightData;
+}
+
+BTNode* makeNode()
+{
+	// 새로운 노드 생성
+	BTNode* newNode = new BTNode;
+	
+	return newNode;
+}
+
+BTNode* findNodeData(BTNode* bt, BTData rootData)
+{
+	// 순회를 통해 bt->data == rootData 의 조건이 만족되는 노드를 찾음
+	// 못찾으면 NULL 반환
+}
+
 int main()
 {
 
 	return 0;
 }
+
+// 생성할 노드를 입력 받는다.
+// 노드를 생성하는 함수를 사용하여 루트,왼,오 노드를 반환하여 생성해준다.
