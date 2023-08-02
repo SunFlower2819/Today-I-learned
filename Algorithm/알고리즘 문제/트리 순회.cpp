@@ -71,6 +71,12 @@ BTNode* findNodeData(BTNode* bt, BTData rootData)
 {
 	// 순회를 통해 bt->data == rootData 의 조건이 만족되는 노드를 찾음
 	// 못찾으면 NULL 반환
+
+	// 이진탐색 트리를 사용할 수 없는 이유
+	// 왼쪽 노드엔 루트 노드보다 작은 수, 오른쪽 노드엔 루트 노드보다 큰 수가 들어가있어야하는데
+	// 왼,오 두 노드에 루트 노드보다 큰 수가 들어갈 수가 있기 때문에 탐색이 어렵다.
+
+	return NULL;
 }
 
 int main()
