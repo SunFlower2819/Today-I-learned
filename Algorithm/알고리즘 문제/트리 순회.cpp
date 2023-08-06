@@ -28,35 +28,78 @@ public:
 	}
 };
 
-// 맨처음 생성된 루트 노드(A)를 기준으로 
-// 노드를 이어주는 연산을 만들면 됨.
+// A노드를 시작으로 트리 형태를 만들어주는 함수
+void makeBinaryTree(BTNode* bt, BTData rootData, BTData leftData, BTData rightData);
 
-// 필요한 연산.
-// 0. 맨 처음 노드를 생성해주는 연산
-// 1. 두 번째 이후의 노드를 생성해주는 연산
-// 2. 중위 순회를 통해 입력된 데이터를 가진 노드를 찾는 연산
-// 3. 전위,중위,후위 순회를 하는 연산
+// 노드 메모리 할당 함수
+BTNode* makeNode();
+
+// 루트 노드를 반환해주는 함수
+BTNode* findNodeData(BTNode* bt, BTData rootData);
+
+// 전위 순회
+void PreorderTraverse(BTNode* bt);
+
+// 중위 순회
+void InorderTraverse(BTNode* bt);
+
+// 후위 순회
+void PostorderTraverse(BTNode* bt);
+
+int main()
+{
+	BTNode* bt = NULL;
+
+	int N;
+	std::cin >> N;
+
+	char rootData, leftData, rightData;
+
+	for (int i = 0; i < N; i++)
+	{
+		std::cin >> rootData >> leftData >> rightData;
+
+		if (bt == NULL)
+		{
+			bt = makeNode();
+			bt->data = rootData;
+
+			bt->leftNode = makeNode();
+			bt->rightNode = makeNode();
+
+			bt->leftNode->data = leftData;
+			bt->rightNode->data = rightData;
+		}	
+		else
+			makeBinaryTree(bt, rootData, leftData, rightData);
+	}
+
+	PreorderTraverse(bt);
+	std::cout << std::endl;
+
+	InorderTraverse(bt);
+	std::cout << std::endl;
+
+	PostorderTraverse(bt);
+	std::cout << std::endl;
+
+	return 0;
+}
 
 void makeBinaryTree(BTNode* bt, BTData rootData, BTData leftData, BTData rightData)
 {
 	//BTNode* newNode = 중위 순회하여 리턴된 루트 노드(알맞는 데이터 없으면 NULL 반환)
+	BTNode* newNode = findNodeData(bt, rootData);
 
 	// 만약 순회하여 리턴된 노드가 없다면, 즉 처음 생성되는 과정이라면
 	// newNode가 맨위의 루트 노드를 가리키게 한다.
-	
-	//if (newNode == NULL)
-	//{
-	//	newNode = bt;
-	//  newNode->data = rootData;
-	//}
-
 	// 왼쪽 노드와 오른쪽 노드도 생성해주는 연산이 필요함. 그리고 아래 과정을 거쳐야함.
 
-	// newNode->leftNode = makeNode();
-	// newNode->rightNode = makeNode();
+	 newNode->leftNode = makeNode();
+	 newNode->rightNode = makeNode();
 	 
-	// newNode->leftNode->Data = leftData;
-	// newNode->rightNode->Data = rightData;
+	 newNode->leftNode->data = leftData;
+	 newNode->rightNode->data = rightData;
 }
 
 BTNode* makeNode()
@@ -69,21 +112,65 @@ BTNode* makeNode()
 
 BTNode* findNodeData(BTNode* bt, BTData rootData)
 {
-	// 순회를 통해 bt->data == rootData 의 조건이 만족되는 노드를 찾음
-	// 못찾으면 NULL 반환
+	if (bt == NULL) {
+		return NULL; // 노드가 없는 경우 NULL 반환
+	}
 
-	// 이진탐색 트리를 사용할 수 없는 이유
-	// 왼쪽 노드엔 루트 노드보다 작은 수, 오른쪽 노드엔 루트 노드보다 큰 수가 들어가있어야하는데
-	// 왼,오 두 노드에 루트 노드보다 큰 수가 들어갈 수가 있기 때문에 탐색이 어렵다.
+	if (rootData == bt->data)
+	{
+		return bt; // 노드의 데이터가 일치하는 경우 해당 노드 반환
+	}
+	else
+	{
+		BTNode* leftResult = findNodeData(bt->leftNode, rootData);
+		if (leftResult != NULL) {
+			return leftResult; // 왼쪽 서브트리에서 찾은 경우 해당 노드 반환
+		}
 
-	return NULL;
+		BTNode* rightResult = findNodeData(bt->rightNode, rootData);
+		return rightResult; // 오른쪽 서브트리에서 찾은 결과를 반환
+	}
 }
 
-int main()
+// 전위
+void PreorderTraverse(BTNode* bt)
 {
-
-	return 0;
+	if(bt->data != '.')
+		std::cout << bt->data;
+	
+	if (bt->leftNode != NULL || bt->rightNode != NULL)
+	{
+		PreorderTraverse(bt->leftNode);
+		PreorderTraverse(bt->rightNode);
+	}
 }
 
-// 생성할 노드를 입력 받는다.
-// 노드를 생성하는 함수를 사용하여 루트,왼,오 노드를 반환하여 생성해준다.
+// 중위
+void InorderTraverse(BTNode* bt)
+{
+	if (bt->leftNode != NULL)
+	{
+		InorderTraverse(bt->leftNode);
+	}
+
+	if (bt->data != '.')
+		std::cout << bt->data;
+
+	if (bt->rightNode != NULL)
+	{
+		InorderTraverse(bt->rightNode);
+	}
+}
+
+// 후위
+void PostorderTraverse(BTNode* bt)
+{
+	if (bt->leftNode != NULL || bt->rightNode != NULL)
+	{
+		PostorderTraverse(bt->leftNode);
+		PostorderTraverse(bt->rightNode);
+	}
+
+	if (bt->data != '.')
+		std::cout << bt->data;
+}
