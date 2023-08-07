@@ -110,6 +110,8 @@ BTNode* makeNode()
 	return newNode;
 }
 
+// 재귀 함수를 통해 값을 전달하는 과정이다.
+// 리턴값을 계속해서 어떻게 전달할지에 대한 고민이 필요하다.
 BTNode* findNodeData(BTNode* bt, BTData rootData)
 {
 	if (bt == NULL) {
