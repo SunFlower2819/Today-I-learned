@@ -1,41 +1,22 @@
 #include <iostream>
 
-// 최소 힙. --> 배열로 구현 (완전이진트리)
-// 0번 인덱스는 비우기
+const int dataSize = 100000;
 
-// 구조체 (우선순위, 데이터)
-// 구조체 (힙, 현재 저장된 데이터 수)
-
-const int dataSize = 200000;
-
-class HeapData
+struct HeapData
 {
-public:
 	int data;
-	int priority;  // 데이터 우선순위
 };
 
-class Heap
+struct Heap
 {
-public:
-	HeapData hBt[dataSize] = { 0 };
-	int numOfData;
-
-	Heap()
-	{
-		numOfData = 0;
-	}
+	HeapData hBt[dataSize];
+	int numOfData = 0;
 };
-
-// 필요한 연산들.
-// 1. IsEmpty()
-// 2. IsFull()
-// 3. 데이터 추가 연산
-// 4. 데이터 삭제 연산
 
 bool IsEmpty(Heap* heap);
 bool IsFull(Heap* heap);
-void AddData(Heap* heap, int data);
+void InsertData(Heap* heap, int data);
+int GetLowChildIDX(Heap* ph, int idx);  // 더 작은 값을 가진 자식의 인덱스를 가져옴
 int DeleteData(Heap* heap);
 
 int main()
@@ -60,68 +41,42 @@ int main()
 		else
 		{
 			if (IsFull(&heap))
-				std::cout << "더 이상 데이터를 추가할 수 없습니다." << std::endl;
+				std::cout << "더 이상 데이터 추가 불가" << std::endl;
 			else
-				AddData(&heap, x);
+				InsertData(&heap, x);
 		}
 	}
-
-	//AddData(&heap, 4);
-	//AddData(&heap, 2);
-	//AddData(&heap, 5);
-	//AddData(&heap, 1);
-	//AddData(&heap, 3);
-
-	//std::cout << DeleteData(&heap) << std::endl;
-	//std::cout << DeleteData(&heap) << std::endl;
-	//std::cout << DeleteData(&heap) << std::endl;
-	//std::cout << DeleteData(&heap) << std::endl;
-	//std::cout << DeleteData(&heap) << std::endl;
 
 	return 0;
 }
 
 bool IsEmpty(Heap* heap)
 {
-	if (heap->numOfData == 0)
-		return true;
-	else
-		return false;
+	return heap->numOfData == 0;
 }
 
 bool IsFull(Heap* heap)
 {
-	if (heap->numOfData == dataSize)
-		return true;
-	else
-		return false;
+	return heap->numOfData == dataSize;
 }
 
-// 힙 삽입연산 구현해야함.
-void AddData(Heap* heap, int num)
+// 힙 삽입연산
+void InsertData(Heap* heap, int num)
 {
-	// 1. 마지막 위치에 노드 삽입
-	// 2. 루트 노드와 비교
-	// 3. 루트 노드보다 작을 시 값 교환
-	// 4. 루트 노드보다 클 시 삽입 완료
-
 	heap->numOfData += 1;
 	int index = heap->numOfData;
 
 	// 마지막 위치에 노드 저장
 	heap->hBt[index].data = num;
-	heap->hBt[index].priority = index;
+	//heap->hBt[index].priority = index;
 
 	// 삽입 노드의 인덱스가 1이면 중지
+	// 노드를 내려주다가 부모노드가 더 작으면 현재 위치에 노드값 저장
 	while (index != 1)
 	{
-		// 삽입 노드와 루트 노드 비교 후 삽입 노드가 작으면 값 교환
-		// 아니면 삽입 완료
-		if (heap->hBt[index].data < heap->hBt[index / 2].data)
+		if (num < heap->hBt[index / 2].data)
 		{
-			int temp = heap->hBt[index].data;
 			heap->hBt[index].data = heap->hBt[index / 2].data;
-			heap->hBt[index / 2].data = temp;
 
 			index /= 2;
 		}
@@ -129,92 +84,43 @@ void AddData(Heap* heap, int num)
 			break;
 	}
 
-	//std::cout << heap->hBt[index].data << "삽입 완료" << std::endl;
+	heap->hBt[index].data = num;
+}
+
+int GetLowChildIDX(Heap* ph, int idx)
+{
+	if (idx * 2 > ph->numOfData) // 자식 노드가 존재하지 않는다면,
+		return 0;
+	else if (idx * 2 == ph->numOfData) // 자식 노드가 왼쪽 자식 노드 하나만 존재한다면
+		return idx * 2;
+	else // 자식 노드가 둘다 존재한다면
+	{
+		// 오른쪽 자식 노드의 데이터가 작다면
+		if (ph->hBt[idx * 2].data > ph->hBt[idx * 2 + 1].data)
+			return idx * 2 + 1; // 오른쪽 자식 노드의 인덱스 값 반환
+		else // 왼쪽 자식 노드의 데이터가 작다면
+			return idx * 2;		// 왼쪽 자식 노드의 인덱스 값 반환
+	}
 }
 
 int DeleteData(Heap* heap)
 {
-	// 1.마지막 노드를 첫 번째 노드 위치로 옮기기
-	// 2.그리고 왼쪽 노드와 오른쪽 노드 중 더 작은 노드와 교환 (물론 선택된 노드보다 작아야함)
-	// 3.삭제 완료
+	int delData = heap->hBt[1].data;
+	HeapData lastElem = heap->hBt[heap->numOfData];
 
-	int deleteData = heap->hBt[1].data;
-	int index = heap->numOfData;
-	heap->numOfData -= 1;
+	int parentIdx = 1;
+	int childIdx;
 
-	// 마지막 노드의 데이터를 루트 노드에 넣어준다. 그리고 마지막 노드의 데이터를 0으로 초기화
-	heap->hBt[1].data = heap->hBt[index].data;
-	heap->hBt[index].data = 0;
-
-	int mNode = heap->hBt[1].data;  // 마지막이었던 노드(계속 움직일 노드 값)
-
-	// 여기까지 루트 노드에 마지막 노드를 삽입해주는 작업을 맞췄어.
-	// 아래부터는 자식 노드와 비교 후 더 작은 값이랑 값을 교환해주는 작업을 해야 돼.
-
-	// 내 생각엔 왼쪽 노드와 오른쪽 노드와 비교후
-	// 더 작은 값이랑 루트 노드랑 비교 후 
-	// 자식 노드가 더 작을 시 교환해주는 메커니즘을 사용해야 할 거 같아.
-
-	int mIndex = 1;
-
-	// 왼쪽이 0이 아니고 오른쪽은 0일 수 있잖아.
-	// 이런 경우는 어떻게 빠져나올꺼야?
-	// 지금 이 문제 땜에 버그가 발생하거든?
-	while (true)
+	while (childIdx = GetLowChildIDX(heap, parentIdx))
 	{
-		// 왼쪽 노드가 오른쪽 노드보다 작다면
-		if (heap->hBt[mIndex * 2].data < heap->hBt[mIndex * 2 + 1].data)
-		{
-			if (heap->hBt[mIndex * 2].data == 0)
-				break;
-
-			// 루트 노드가 왼쪽 노드보다 작다면
-			if (heap->hBt[mIndex * 2].data < heap->hBt[mIndex].data)
-			{
-				// 값 교환
-				int temp = heap->hBt[mIndex].data;
-				heap->hBt[mIndex].data = heap->hBt[mIndex * 2].data;
-				heap->hBt[mIndex * 2].data = temp;
-
-				mIndex = mIndex * 2;
-			}
-			else
-				break;
-		}
-		else
-		{
-			if (heap->hBt[mIndex * 2].data == 0)
-				break;
-
-			if (heap->hBt[mIndex * 2 + 1].data == 0)
-			{
-				if (heap->hBt[mIndex * 2].data < heap->hBt[mIndex].data)
-				{
-					// 값 교환
-					int temp = heap->hBt[mIndex].data;
-					heap->hBt[mIndex].data = heap->hBt[mIndex * 2].data;
-					heap->hBt[mIndex * 2].data = temp;
-
-					break;
-				}
-				else
-					break;
-			}
-
-			// 루트 노드가 오른쪽 노드보다 작다면
-			if (heap->hBt[mIndex * 2 + 1].data < heap->hBt[mIndex].data)
-			{
-				// 값 교환
-				int temp = heap->hBt[mIndex].data;
-				heap->hBt[mIndex].data = heap->hBt[mIndex * 2 + 1].data;
-				heap->hBt[mIndex * 2 + 1].data = temp;
-
-				mIndex = mIndex * 2 + 1;
-			}
-			else
-				break;
-		}
+		if (lastElem.data <= heap->hBt[childIdx].data)
+			break;
+		heap->hBt[parentIdx] = heap->hBt[childIdx];
+		parentIdx = childIdx;
 	}
 
-	return deleteData;
+	heap->hBt[parentIdx] = lastElem;
+	heap->numOfData -= 1;
+
+	return delData;
 }
