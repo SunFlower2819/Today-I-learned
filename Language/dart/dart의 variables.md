@@ -1,3 +1,7 @@
+### 🤞var
+`var`는 메소드나 작은 함수에서 사용되기를 권장된다.
+`int`나 `double`같이 명시적으로 형식을 지정하는 건 class의 property에서 사용된다.
+
 ### 🤞Nullable variable (Null safety)
 Null은 '아무것도 없는 상태'를 의미하기 떄문에 필요하다.
 하지만 문제는 Null를 참조하려고 할 때 발생한다.
@@ -42,7 +46,7 @@ const는 컴파일할 때 알고 있는 값을 사용해야 한다.
 ```dart
 void main() {
   const name = "tom"; // 컴파일 시점에 바뀌지 않는 값
-  final username=fetchAPI(); // 컴파일 시점에 바뀌는 값
+  final username = fetchAPI(); // 컴파일 시점에 바뀌는 값
 }
 ```
 const: 컴파일 시점에 바뀌지 않는 값 (상수)
