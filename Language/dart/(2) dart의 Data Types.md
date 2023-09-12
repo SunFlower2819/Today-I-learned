@@ -54,7 +54,7 @@ void main() {
 
 ### 🤞Maps
 
-```
+```dart
 void main() {
   var school_num = {
     "선태욱": 2288065,
@@ -77,7 +77,7 @@ void main() {
 
 요소가 하나씩 있어야 하면 `Set` 아니면 `List`
 
-```
+```dart
 void main() {
   Set<int> unique_num = {1,2,3};
   unique_num.add(1);
