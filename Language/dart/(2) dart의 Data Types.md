@@ -51,3 +51,45 @@ void main() {
   print(myFriends);
 }
 ```
+
+### 🤞Maps
+
+```
+void main() {
+  var school_num = {
+    "선태욱": 2288065,
+    "김효태": 2288053,
+    "최재영": 1988032,
+  };
+  
+  Map<int, String> desk_num = {
+    1: "1번 테이블",
+    2: "2번 테이블",
+    3: "3번 테이블",
+  };
+  
+  print(school_num);
+  print(desk_num);
+}
+```
+
+### 🤞Sets
+
+요소가 하나씩 있어야 하면 `Set` 아니면 `List`
+
+```
+void main() {
+  Set<int> unique_num = {1,2,3};
+  unique_num.add(1);
+  unique_num.add(1);   // 아무리 1을 추가해도 여전히 Set에는 1이 하나이다.
+  unique_num.add(4);
+  
+  print(unique_num);  // {1, 2, 3, 4}
+  
+  List<int> just_num = [1,2,3];
+  just_num.add(1);
+  just_num.add(1);
+  
+  print(just_num);    // [1, 2, 3, 1, 1]  <-- 1이 두번 추가됨
+}
+``` 
