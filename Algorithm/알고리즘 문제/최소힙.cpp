@@ -3,7 +3,7 @@
 const int dataSize = 100000;
 
 struct HeapData
-{
+{ 
 	int data;
 };
 
