@@ -5,7 +5,7 @@
 
 ---
 
-### OpenGL이란?
+### 🔵OpenGL이란?
 우선 위의 에러를 이해하기 위해서는 **OpenGL (Open Graphics Library)**이 뭔지 이해해야 한다.
 
  **OpenGL**은**그래픽 하드웨어(GPU)와 통신할 수 있도록 지원해주는 API 또는 표준 규격**을 뜻한다. 그리고
@@ -24,4 +24,10 @@
 
 ---
 
-### GLEW란?
+### 🔵GLEW란?
+
+**GLEW**는 **The OpenGL Extension Wrangler Library**의 준말로, 크로스 플랫폼 오픈소스 C/C++ 확장 라이브러리입니다.  **GLEW**는 **OpenGL**의 새로운 기능을 제공하는 하나의 헤더파일입니다. **OpenGL**에서 기본적으로 제공하지 않는 기능들을 제공하기 때문에 모든 컴퓨터에서 잘 작동한다는 보장은 없지만 상당히 유용한 기능들을 제공한다.
+
+**OpenGL**은 하나의 라이브러리가 아니기 때문에 프로젝트에 간단하게 연결할수가 없습니다. 그래서 **GLEW** 같은 라이브러리의 도움을 받습니다. **glew.h**와 같은 헤더파일만 include 하면 **OpenGL의 기능**들을 쉽게 사용할 수 있게 된다.
+
+출처: https://justdoitproject.tistory.com/15 [JUST DO IT PROJECT:티스토리]
