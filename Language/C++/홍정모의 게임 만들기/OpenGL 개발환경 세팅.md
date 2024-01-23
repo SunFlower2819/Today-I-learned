@@ -42,3 +42,6 @@
 또한, vcpkg를 비주얼 스튜디오와 연동하면, 헤더 파일만 포함시켜도 라이브러리가 자동으로 링크된다.
 
 이를 설치하는 과정은 https://github.com/microsoft/vcpkg/blob/master/README_ko_KR.md 에 있다.
+
+#### 🎈🎈 시작부터 난관..
+아니 **`glew32.lib 파일을 열 수 없습니다`** 라는 오류가 계속 뜨길래 visual studio의 프로젝트 속성에 들어가서 `링커 -> 일반 -> 추가 종속성` 에서 `glew32.lib`를 **`glfw3dll.lib`** 로 변경해줬더니 문제가 해결되었다.
