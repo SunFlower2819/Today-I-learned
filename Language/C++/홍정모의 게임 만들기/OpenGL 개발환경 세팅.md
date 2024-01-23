@@ -1,4 +1,5 @@
-![image-20240123131542350](../images/안녕/image-20240123131542350.png)
+![image](https://github.com/SunFlower2819/Today-I-learned/assets/130738283/226da234-717c-40fb-b181-21adf1fd60af)
+
 
 `#include <GL/glew.h>`  에서 에러 발생
 
