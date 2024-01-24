@@ -1,0 +1,46 @@
+### 좌표 이동 `beginTransformation()`과 `endTransformation()`의 이해
+```cpp
+namespace jm
+{
+	class RotatingStarExample : public Game2D
+	{
+		float time = 0.0f;
+
+	public:
+		// 일정 시간 만큼 캔버스를 돌리고 다시 별을 그리고 새로운 각도의 캔버스를 소환하고 다시 별을 그리는 원리 아닐까?
+		void update() override
+		{
+			beginTransformation(); // 여기서부터
+
+			const vec2 p0 = vec2(0.0f, 0.0f);
+			const vec2 p1 = vec2(0.5f, 0.5f);
+			const vec2 p2 = vec2(0.0f, 0.5f);
+
+			translate(0.5f, 0.0f);  // 이 함수는 캔버스 자체의 좌표를 옮겨준다.
+			drawLine(Colors::red, p0, Colors::blue, p1);
+			drawLine(Colors::red, p1, Colors::blue, p2);
+			drawLine(Colors::red, p2, Colors::blue, p0);
+
+			endTransformation(); // 여기까지의 좌표 변환은 이 구역을 지나면 초기화
+
+			translate(0.0f, 0.5f); 
+			drawLine(Colors::red, p0, Colors::blue, p1);
+			drawLine(Colors::red, p1, Colors::blue, p2);
+			drawLine(Colors::red, p2, Colors::blue, p0);
+		}
+	};
+}
+```
+
+`beginTransformation()`와 `endTransformation()` 사이에서의 좌표변환(`translate()`)은 `endTransformation()`를 벗어나면
+다시 초기화가 된다.
+
+
+![image](https://github.com/SunFlower2819/Today-I-learned/assets/130738283/b2ff3da5-fdd1-462e-8993-12c661083f1f)
+
+만약 `beginTransformation()`와 `endTransformation()`가 없다면?? <br>
+아래 그림과 같이 된다.
+
+![image](https://github.com/SunFlower2819/Today-I-learned/assets/130738283/1e96ff6c-5c7b-4b38-9795-5415a2157db0)
+
+
