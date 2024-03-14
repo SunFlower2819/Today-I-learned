@@ -153,3 +153,91 @@ int main()
 	return 0;
 }
 ```
+
+## 🔵 이항 연산자 오버로딩
+
+🔥 == 연산자 오버로딩
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Point
+{
+private:
+	int x;
+	int y;
+public:
+	Point(int _x = 0, int _y = 0) : x(_x), y(_y)
+	{}
+
+	void Print() const
+	{
+		std::cout << x << ',' << y << std::endl;
+	}
+
+	bool operator==(const Point& arg) const
+	{
+		return x == arg.x && y == arg.y ? true : false;
+	}
+};
+
+int main()
+{
+	Point p1(2, 4);
+	Point p2(5, 6);
+	Point p3(5, 6);
+
+	if (p1 == p2)
+		cout << "p1 == p2" << endl;
+	if (p2 == p3)
+		cout << "p2 == p3" << endl;
+
+	return 0;
+}
+```
+
+🔥 != 연산자 오버로딩
+```cpp
+#include <iostream>
+using namespace std;
+
+class Point
+{
+private:
+	int x;
+	int y;
+public:
+	Point(int _x = 0, int _y = 0) : x(_x), y(_y)
+	{}
+
+	void Print() const
+	{
+		std::cout << x << ',' << y << std::endl;
+	}
+
+	bool operator==(const Point& arg) const
+	{
+		return x == arg.x && y == arg.y ? true : false;
+	}
+
+	bool operator!=(const Point& arg) const
+	{
+		return !(*this == arg);
+	}
+};
+
+int main()
+{
+	Point p1(2, 4);
+	Point p2(5, 6);
+	Point p3(5, 6);
+
+	if (p1 != p2)
+		cout << "p1 != p2" << endl;
+	if (p2 != p3)
+		cout << "p2 != p3" << endl;
+
+	return 0;
+}
+```
