@@ -267,3 +267,55 @@ int main()
 	return 0;
 }
 ```
+
+🔥 메모리 접근, 클래스 멤버 접근 연산자 오버로딩: *, -> 연산자
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Point
+{
+	int x;
+	int y;
+public:
+	Point(int _x = 0, int _y = 0) : x(_x), y(_y) {}
+	void Print() const { cout << x << ',' << y << endl; }
+};
+
+class PointPtr
+{
+	Point* ptr;
+public:
+	PointPtr(Point* p) : ptr(p) {}
+
+	~PointPtr()
+	{
+		delete ptr;
+	}
+
+	Point* operator->() const
+	{
+		return ptr;
+	}
+
+	Point& operator*() const
+	{
+		return *ptr;
+	}
+};
+
+int main()
+{
+	Point* p1 = new Point(1, 2);
+	PointPtr p2 = new Point(3, 5);
+
+	p1->Print();
+	p2->Print(); // p2.operator->()->Print(); 호출
+
+	(*p1).Print();
+	(*p2).Print(); // p2.operator*().Print(); 호출
+
+	return 0;
+}
+```
