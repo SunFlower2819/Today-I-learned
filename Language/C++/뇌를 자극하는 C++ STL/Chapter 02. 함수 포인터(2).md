@@ -109,7 +109,7 @@ int main()
 pf1 = &Point::Print;
 pf1 = &(Point::Print);
 ```
-위의 두 문장은 동일하다.
+참고로 위의 두 문장은 동일하다.
 
 ✅아래부터는 쳇 GPT의 내용이다. 
 
