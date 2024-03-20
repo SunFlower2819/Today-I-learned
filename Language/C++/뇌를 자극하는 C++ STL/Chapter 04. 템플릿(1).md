@@ -1,4 +1,4 @@
-# 함수 템플릿
+# 🔵함수 템플릿
 
 템플릿은 함수 템플릿(Function Template)과 클래스 템플릿(Class Template)이 있습니다.
 
