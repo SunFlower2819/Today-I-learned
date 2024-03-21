@@ -1,7 +1,7 @@
 # 🔵STL을 위한 템플릿 예제
 
 ### 🔥명시적으로 함수 템플릿을 호출한 예제이다.
-
+ 
 ```cpp
 #include <iostream>
 #include <string>
@@ -161,6 +161,138 @@ int main()
 	cout << p3.first << ',' << p3.second << endl;
 	pair<int, string> p4(200, "Hmm...");
 	cout << p4.first << ',' << p4.second << endl;
+
+	return 0;
+}
+```
+
+# 🟠문제
+
+Stack이랑 Queue 간단 구현
+
+```cpp
+#include <iostream>
+using namespace std;
+
+template<typename T>
+class Stack
+{
+	T* data;
+	int size;
+	int capacity = 0;
+public:
+	Stack(int size = 100) : size(size)
+	{
+		data = new T[size];
+	}
+
+	void Push(T d)
+	{
+		if (capacity < size)
+			data[capacity++] = d;
+	}
+
+	T Pop()
+	{
+		return data[--capacity];
+	}
+
+	bool Empty()
+	{
+		if (capacity == 0)
+		{
+			cout << "더 이상 제거 불가" << endl;
+			return true;
+		}
+		else
+			return false;
+	}
+
+	~Stack()
+	{
+		delete[] data;
+	}
+};
+
+template<typename T>
+class Queue
+{
+	T* data;
+	int size;
+	int capacity = 0;
+public:
+	Queue(int size = 100) : size(size)
+	{
+		data = new T[size];
+	}
+
+	void Push(T d)
+	{
+		if (capacity < size)
+			data[capacity++] = d;
+	}
+
+	T Pop()
+	{
+		T popData = data[0];
+
+		for (int i = 0; i < capacity - 1; i++)
+		{
+			data[i] = data[i + 1];
+		}
+		capacity--;
+
+		return popData;
+	}
+
+	bool Empty()
+	{
+		if (capacity == 0)
+		{
+			cout << "더 이상 제거 불가" << endl;
+			return true;
+		}
+		else
+			return false;
+	}
+
+	~Queue()
+	{
+		delete[] data;
+	}
+};
+
+int main()
+{
+	Stack<const char*> st;
+	st.Push("HELDFLDOI");
+	st.Push("DFBRDFBF");
+	st.Push("ABCDEFG");
+
+	if (!st.Empty())
+		cout << st.Pop() << endl;
+	if (!st.Empty())
+		cout << st.Pop() << endl;
+	if (!st.Empty())
+		cout << st.Pop() << endl;
+	if (!st.Empty())
+		cout << st.Pop() << endl;
+
+	//-------------------------------------------------
+
+	Queue<const char*> q;
+	q.Push("QQQQQQQ");
+	q.Push("WWWWWWW");
+	q.Push("EEEEEEE");
+
+	if (!q.Empty())
+		cout << q.Pop() << endl;
+	if (!q.Empty())
+		cout << q.Pop() << endl;
+	if (!q.Empty())
+		cout << q.Pop() << endl;
+	if (!q.Empty())
+		cout << q.Pop() << endl;
 
 	return 0;
 }
