@@ -1,6 +1,6 @@
 # 🔵STL이란
 
-STL은 표준 C++ 라이브러리의 일부분으로 Standard Template Library의 약자입니다.
+STL은 표준 C++ 라이브러리의 일부분으로 Standard Template Library의 약자입니다. 
 
 STL은 프로그램에 필요한 자료구조와 알고리즘을 템플릿으로 제공하는 라이브러리입니다. 
 
