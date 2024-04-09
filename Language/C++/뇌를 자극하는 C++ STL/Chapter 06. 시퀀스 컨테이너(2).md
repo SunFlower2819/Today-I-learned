@@ -217,4 +217,139 @@ int main()
 	return 0;
 }
 ```
+---
 
+## 🔥iterator와 const_iterator 
+
+```cpp
+int main()
+{
+	vector<int> v;
+
+	v.push_back(10);
+	v.push_back(20);
+	v.push_back(30);
+	v.push_back(40);
+	v.push_back(50);
+
+	vector<int>::iterator iter = v.begin();                    // 🎈int* 처럼 동작        
+	cout << *iter << endl;
+
+	vector<int>::const_iterator citer = v.begin();             // 🎈const int* 처럼 동작
+	cout << *citer << endl;
+
+	const vector<int>::iterator iter_const = v.begin();        // 🎈int* const 처럼 동작
+	cout << *iter_const << endl;
+
+	const vector<int>::const_iterator citer_const = v.begin(); // 🎈const int* const 처럼 동작
+	cout << *citer_const << endl;
+
+	return 0;
+}
+```
+
+---
+
+## 🔥`insert()` 멤버 함수를 사용하여 원소를 vector 컨테이너에 삽입할 수 있다.
+반복자가 가리키는 위치의 원소 자리에 삽입하면, 삽입 위치부터 뒤에 있는 모든 원소는 뒤로 밀립니다.
+
+```cpp
+int main()
+{
+	vector<int> v;
+
+	v.push_back(10);
+	v.push_back(20);
+	v.push_back(30);
+	v.push_back(40);
+	v.push_back(50);
+
+	vector<int>::iterator iter = v.begin() + 2; // 30을 가리킴
+
+	v.insert(iter, 99);  
+
+	for (iter = v.begin(); iter != v.end(); iter++)  // 10 20 99 30 40 50 출력
+		cout << *iter << " ";
+	cout << endl;
+
+	iter = v.begin() + 3; // 30을 가리킴
+	
+	v.insert(iter, v.begin() + 1, v.end());  
+
+	for (iter = v.begin(); iter != v.end(); iter++) // 10 20 99 20 99 30 40 50 30 40 50 출력
+		cout << *iter << " ";
+
+	return 0;
+}
+```
+
+---
+
+## 🔥`erase`는 반복자를 사용하여 원소를 제거할 수 있다.
+**🎈🎈`erase()`는 제거한 원소의 다음 원소를 가리키는 반복자를 반환합니다.**
+
+```cpp
+int main()
+{
+	vector<int> v;
+
+	v.push_back(10);
+	v.push_back(20);
+	v.push_back(30);
+	v.push_back(40);
+	v.push_back(50);
+
+	vector<int>::iterator iter;
+	vector<int>::iterator iter2;
+	for (iter = v.begin(); iter != v.end(); iter++) // 10 20 30 40 50 출력
+		cout << *iter << " ";
+	cout << endl;
+
+	iter = v.begin() + 2;  // iter는 30
+	iter2 = v.erase(iter); // v에서 iter가 가리키는 30을 제거하고 다음 원소인 40을 반환
+	cout << *iter2 << endl << endl; // 40 출력
+
+	for (iter = v.begin(); iter != v.end(); iter++)  // 10 20 40 50 출력
+		cout << *iter << " ";
+	cout << endl;
+	 
+	iter2 = v.erase(v.begin() + 1, v.end()); // 10을 제외하고 나머지 다 제거 그리고 10의 다음을 반환, 즉 v.end()를 가리킴
+	//cout << *iter2 << endl << endl; --> 이건 오류 발생 왜냐하면 10 다음에는 아무것도 없으니까즉, v.end()니까
+
+	for (iter = v.begin(); iter != v.end(); iter++)  // 10 출력
+		cout << *iter << " ";
+
+	return 0;
+}
+```
+
+---
+
+## 🔥`assign()`
+vector의 생성자는 반복자를 통해서 초기화 될 수 있으며 `assign()` 멤버 함수도 반복자를 통해 할당될 수 있습니다.
+
+```cpp
+int main()
+{
+	vector<int> v;
+	v.push_back(10);
+	v.push_back(20);
+	v.push_back(30);
+	v.push_back(40);
+	v.push_back(50);
+
+	vector<int> v2(v.begin(), v.end());
+
+	for (vector<int>::iterator  iter = v2.begin(); iter != v2.end(); iter++)
+		cout << *iter << " ";
+
+	cout << endl;
+
+	vector<int> v3;
+	v3.assign(v.begin(), v.end());
+	for (vector<int>::iterator  iter = v3.begin(); iter != v3.end(); iter++)
+		cout << *iter << " ";
+	
+	return 0;
+}
+```
