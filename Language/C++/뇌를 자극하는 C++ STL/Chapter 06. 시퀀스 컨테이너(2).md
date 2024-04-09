@@ -194,3 +194,26 @@ size: 3 capcity: 10
 또한 `v.clear()`를 사용해서 `v`를 비워도 `size`는 0이 되지만 `capacity`의 크기는 여전하다.
 
 만약 메모리가 부족한 상태라면 너무 비효율적이다. `capacity`를 0으로 만드는 함수는 존재하지 않지만 C++에서 권장하는 `swap`방법이 있다.
+
+---
+
+## 🔥`swap`을 사용하여 capacity를 0으로 만드는 방법
+임시 객체와 `swap`한 v는 당연하게도 `size`와 `capacity`가 0입니다.
+
+```cpp
+int main()
+{
+	vector<int> v(10);
+
+	cout << "size: " << v.size();
+	cout << " capacity: " << v.capacity() << endl;   // size: 10 capacity: 10 출력
+
+	vector<int>().swap(v);
+
+	cout << "size: " << v.size();
+	cout << " capacity: " << v.capacity() << endl;   // size: 0 capacity: 0   출력
+
+	return 0;
+}
+```
+
