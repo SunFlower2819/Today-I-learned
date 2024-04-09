@@ -11,7 +11,7 @@ for (int i = 0; i < v.size(); i++)
     cout << v[i] << ' ';
 ```
 위와 같이 코드를 짜면 컴파일러는 경고를 내보낸다. 그 이유는 `v.size()`가 반환하는 타입이 `unsigned int`이기 때문이다.
-
+ 
 ```cpp
 cout << typeid(vector<int>::size_type).name() << endl;  // unsigned __int64 출력
 ```
