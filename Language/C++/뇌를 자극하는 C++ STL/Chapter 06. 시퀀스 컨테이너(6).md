@@ -66,7 +66,7 @@
   </tr>
   <tr>
     <td>q=lt.erase(p)</td>
-    <td>p가 가리키는 원소를 제거한다. q는 다음 원솔,ㄹ 가리킨다.</td>
+    <td>p가 가리키는 원소를 제거한다. q는 다음 원소를 가리킨다.</td>
   </tr>
   <tr>
     <td>q=lt.erase(b,e)</td>
