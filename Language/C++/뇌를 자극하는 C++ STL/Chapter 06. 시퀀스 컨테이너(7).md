@@ -104,5 +104,6 @@ int main()
 하지만, `lt`는 원소(노드) 하나만을 삽입하므로 속도가 빠르며 반복자들이 무효화되지 않는다. 
 
 또한, `erase()`함수의 동작도 '삽입'동작과 같은 특징을 보인다.
+
 ![image](https://github.com/SunFlower2819/Today-I-learned/assets/130738283/1b4cccea-f54e-4371-a456-111ed616d5c0)
 
