@@ -5,7 +5,7 @@
 <table>
   <tr>
     <td colspan="2"><b>생성자</b></td>
-  </tr>
+  </tr> 
   <tr>
     <td>list lt</td>
     <td>lt는 빈 컨테이너다.</td>
