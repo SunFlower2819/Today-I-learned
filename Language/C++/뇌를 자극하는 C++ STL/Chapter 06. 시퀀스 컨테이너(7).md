@@ -11,7 +11,7 @@ list는 노드 기반 컨테이너로 `at()`과 `[]`연산자가 없으며 임�
 ## 🔥list의 원소 추가와 반복자
 ```cpp
 #include <iostream>
-#include <list>
+#include <list> 
 using namespace std;
 
 int main()
