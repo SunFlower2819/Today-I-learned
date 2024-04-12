@@ -107,3 +107,115 @@ int main()
 
 ![image](https://github.com/SunFlower2819/Today-I-learned/assets/130738283/1b4cccea-f54e-4371-a456-111ed616d5c0)
 
+---
+
+## 🔥list의 `remove()`와 `remove_if()`
+`remove()` 멤버 함수는 컨테이너의 모든 원소를 순차적으로 검색하며 해당 원소를 제거합니다.
+
+list의 `remove()`는 `erase()`처럼 해당 값의 노드만을 제거하므로 속도가 빠르며 유일하게 list만이 `remove()`멤버 함수를 가지므로 반복자가 아닌 원소의 값으로
+컨테이너의 원소 제거해야 한다면 list 컨테이너를 선택하는 것이 좋습니다.
+
+```cpp
+#include <iostream>
+#include <list>
+using namespace std;
+
+int main()
+{
+	list<int> lt;
+
+	lt.push_back(0); 
+	lt.push_back(20);
+	lt.push_back(30);
+	lt.push_back(0);
+	lt.push_back(50);
+	lt.push_back(0);
+	lt.push_back(70);
+	lt.push_back(0);
+	lt.push_back(0);
+
+	for (list<int>::iterator iter = lt.begin(); iter != lt.end(); iter++) // 0 20 30 0 50 0 70 0 0 출력
+		cout << *iter << " ";
+	cout << endl;
+
+	lt.remove(0); // 0 원소의 노드를 모두 제거
+
+	for (list<int>::iterator iter = lt.begin(); iter != lt.end(); iter++) // 20 30 50 70 출력
+		cout << *iter << " ";
+
+	return 0;
+}
+```
+<br>
+
+`remove_if()` 멤버 함수는 단항 조건자(predicate)가 참인 모든 원소를 제거합니다.
+
+조건자는 bool 형식을 반환하는 함수류(함수, 함수 객체, 함수 포인터)입니다.
+```cpp
+#include <iostream>
+#include <list>
+using namespace std;
+
+bool Predicate(int n) // 단한 조건자
+{
+	return 10 <= n && n <= 30;
+}
+
+int main()
+{
+	list<int> lt;
+
+	lt.push_back(10); 
+	lt.push_back(20); 
+	lt.push_back(30); 
+	lt.push_back(40); 
+	lt.push_back(50); 
+
+	for (list<int>::iterator iter = lt.begin(); iter != lt.end(); iter++) // 10 20 30 40 50 출력
+		cout << *iter << " ";
+	cout << endl;
+
+	lt.remove_if(Predicate); // 조건자가 참임 모든 원소를 제
+
+	for (list<int>::iterator iter = lt.begin(); iter != lt.end(); iter++) // 40 50 출력
+		cout << *iter << " ";
+
+	return 0;
+}
+```
+
+---
+
+## 🔥list의 `splice()`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
