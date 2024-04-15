@@ -19,7 +19,7 @@ int main()
 	list<int> lt;
 
 	lt.push_back(10); // 뒤쪽에 추가
-	lt.push_back(20);
+	lt.push_back(20); 
 	lt.push_back(30);
 	lt.push_back(40);
 	lt.push_back(50);
