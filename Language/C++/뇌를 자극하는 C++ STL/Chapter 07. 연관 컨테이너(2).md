@@ -228,3 +228,222 @@ key_compare type: struct std::greater<int>
 value_compare type: struct std::less<int>
 value_compare type: struct std::greater<int>
 ```
+
+***🎈🎈연관 컨테이너는 모두 같은 인터페이스의 멤버 함수를 제공합니다. 이 연관 컨테이너의 핵심 인터페이스는 찾기 관련 멤버 함수입니다.***
+
+찾기 관련 멤버 함수는 정렬 기준으로 트리의 루트 노드부터 자식 노드로 검색을 진행하므로 로그 시간 복잡도에 실행되며 `count()`, `find()`, `lower_bound()`, `upper_bound()`,
+`equal_range()` 멤버 함수입니다.
+
+원소의 중복을 허용하지 않는 set 컨테이너는 원소(key)와 일치하는 개수를 반환하는 `count()` 멤버 함수가 굳이 필요 없지만 연관 컨테이너의 인터페이스가 모두 같으므로
+set도 `count()` 멤버 함수를 제공합니다.
+
+---
+
+## 🔥원소의 개수를 반환하는 `conut()`
+실행 시간은 로그 시간 복잡도입니다.
+
+```cpp
+#include <iostream>
+#include <set>
+using namespace std;
+
+int main()
+{
+	set<int> s;
+
+	s.insert(50);
+	s.insert(30);
+	s.insert(80);
+	s.insert(10);
+	s.insert(20);
+
+	set<int>::iterator iter;
+	for (iter = s.begin(); iter != s.end(); iter++) // 10 20 30 50 80 출력
+		cout << *iter << " ";
+	cout << endl;
+
+	cout << "원소 50의 개수: " << s.count(50) << endl;    // 1 출력
+	cout << "원소 100의 개수: " << s.count(100) << endl;  // 0 출력 
+
+	return 0;
+}
+```
+
+---
+
+## 🔥원소의 개수를 반환하는 `find()`
+`find()`는 연관 컨테이너의 핵심 멤버 함수이다.
+
+`find()`는 key(원소)를 검색하여 key를 가리키는 반복자를 반환합니다.
+
+만약 key(원소)가 없으면 끝 표시(past-the-end) 반복자를 반환합니다.
+
+`end()` 멤버 함수가 끝 표시 반복자를 반환하므로 `end()` 멤버 함수와 비교해 검색이 성공했는지 성공하지 못했는지 판단합니다.
+
+```cpp
+#include <iostream>
+#include <set>
+using namespace std;
+
+int main()
+{
+	set<int> s;
+
+	s.insert(50);
+	s.insert(30);
+	s.insert(80);
+	s.insert(10);
+	s.insert(20);
+
+	set<int>::iterator iter;
+	for (iter = s.begin(); iter != s.end(); iter++) // 10 20 30 50 80 출
+		cout << *iter << " ";
+	cout << endl;
+
+	iter = s.find(30);
+	if (iter != s.end())
+		cout << *iter << "가 s에 있습니다!" << endl;  // 30가 s에 있습니다! 출력 
+	else
+		cout << "30이 s에 없습니다!" << endl;
+
+	return 0;
+}
+```
+
+여기서 주의할 점이 있습니다. 연관 컨테이너의 찾기 관련 멤버 함수는 key(원소)를 찾을 때 `==`연산을 사용하지 않습니다.
+연관 컨테이너는 정렬 기준에 의해 key(원소)가 정렬되어 있으므로 컨테이너의 정렬 기준 조건자를 이용해 찾기 연산을 수행합니다.
+
+그니까 내부적으로 `find()`와 같이 연관 컨테이너의 찾기 관련 멤버 함수는 `==`연산으로 key를 찾는 것이 아니라, 컨테이너의 정렬 기준 조건자를 이용해 찾는다는 의미이다.
+
+아래가 그 예시 코드이다.
+
+```cpp
+#include <iostream>
+#include <set>
+using namespace std;
+
+int main()
+{
+	set<int, less<int>> s;
+
+	// 30과 50의 비교
+	cout << (!s.key_comp() (30, 50) && !s.key_comp()(50, 30)) << endl; // 0 출력
+
+	// 30과 30의 비교
+	cout << (!s.key_comp() (30, 30) && !s.key_comp()(30, 30)) << endl; // 1 출력
+
+	return 0;
+}
+```
+
+```cpp
+(!s.key_comp() (30, 50) && !s.key_comp()(50, 30))
+```
+에서 `!s.key_comp() (30, 50)`은 `!(30 < 50)`으로 false 지만, `!s.key_comp()(50, 30)`은 `!(50 < 30)`은 true이므로 결국 false다. (false && true 이므로)
+
+하지만
+
+```cpp
+(!s.key_comp() (30, 30) && !s.key_comp()(30, 30))
+```
+에서 `!s.key_comp() (30, 30)`은 true이고 `!s.key_comp()(30, 30))` 또한 true 이므로 true이다.
+
+---
+
+## 🔥set의 멤버함수 `lower_bound()`와 `upper_bound()`
+`lower_bound()`는 찾은 원소의 시작 반복자를 반환하며 `upper_bound()`는 찾은 원소의 다음 원소를 가리키는 반복자를 반환한다.
+
+그래서 찾은 원소는 구간 [ `lower_bound()`, `upper_bound()` ]로 표현할 수 있으며, `lower_bound()`와 `upper_bound()`가 같다면 찾는 원소가 없는 것이다.
+
+사실 중복 원소를 갖지 않는 set에서 두 멤버 함수는 큰 의미가 있지 않지만, multiset이나 multimap에서는 유용하게 사용된다.
+
+```cpp
+#include <iostream>
+#include <set>
+using namespace std;
+
+int main()
+{
+	set<int, less<int>> s;
+
+	s.insert(50);
+	s.insert(30);
+	s.insert(80);
+	s.insert(40);
+	s.insert(10);
+	s.insert(70);
+	s.insert(90);
+
+	for (set<int>::iterator iter = s.begin(); iter != s.end(); iter++)
+		cout << *iter << " ";
+	cout << endl;
+
+	set<int>::iterator iter_lower;
+	set<int>::iterator iter_upper;
+
+	iter_lower = s.lower_bound(30);
+	iter_upper = s.upper_bound(30);
+	cout << *iter_lower << endl;    // 30 출력
+	cout << *iter_upper << endl;    // 40 출력
+
+	iter_lower = s.lower_bound(999);
+	iter_upper = s.upper_bound(999);
+	if (iter_lower != iter_upper)
+		cout << "999가 s에 있습니다!" << endl;  // <-- 이게 출력
+	else
+		cout << "999가 s에 없습니다!" << endl;
+
+	return 0;
+}
+```
+
+![image](https://github.com/SunFlower2819/Today-I-learned/assets/130738283/d117089b-c830-4981-b093-b57b61e7b49d)
+
+---
+
+## 🔥`lower_bound()`와 `upper_bound()`의 반복자 쌍을 pair 객체로 반환하는 `equal_range()`
+
+`equal_range()`는 `lower_bound()`와 `upper_bound()`의 반복자 쌍을 pair 객체로 반환합니다.
+
+```cpp
+#include <iostream>
+#include <set>
+using namespace std;
+
+int main()
+{
+	set<int, less<int>> s;
+
+	s.insert(50);
+	s.insert(30);
+	s.insert(80);
+	s.insert(40);
+	s.insert(10);
+	s.insert(70);
+	s.insert(90);
+
+	for (set<int>::iterator iter = s.begin(); iter != s.end(); iter++)
+		cout << *iter << " ";
+	cout << endl;
+
+	pair<set<int>::iterator, set<int>::iterator> iter_pair;
+
+	iter_pair = s.equal_range(30);
+	cout << *iter_pair.first << endl;    // 30 출력
+	cout << *iter_pair.second << endl;    // 40 출력
+
+	iter_pair = s.equal_range(999);
+	if (*iter_pair.first != *iter_pair.second)
+		cout << "999가 s에 있습니다!" << endl;
+	else
+		cout << "999가 s에 없습니다!" << endl;
+
+	return 0;
+}
+```
+
+
+
+
+
+
