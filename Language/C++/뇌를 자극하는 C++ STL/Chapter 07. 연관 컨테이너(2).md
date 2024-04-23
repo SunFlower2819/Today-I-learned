@@ -151,3 +151,80 @@ int main()
 	return 0;
 }
 ```
+
+<br>
+
+연관컨테이너의 기본 정렬 기준은 조건자 `less`을 사용합니다. 기본 정렬 기준은 템플릿 매개 변수를 사용해 바꿀 수 있습니다.
+
+```cpp
+#include <iostream>
+#include <set>
+using namespace std;
+
+int main()
+{
+	set<int, greater<int>> s; // 정렬 기준으로 greater<int> 조건자 사용
+
+	s.insert(50);
+	s.insert(30);
+	s.insert(80);
+	s.insert(40);
+	s.insert(10);
+	s.insert(70);
+
+	set<int>::iterator iter;
+	for (iter = s.begin(); iter != s.end(); ++iter) // 80 70 50 40 30 10 출력
+		cout << *iter << " ";
+	cout << endl;
+
+	return 0;
+}
+```
+<br>
+
+set은 사용 중인 정렬 기준 조건자를 반환하는 멤버 함수 `key_comp()`와 `value_comp()`를 제공합니다.
+이때 정렬 기준 형식은 typedef 내장 멤버 형식 `key_compare`와 `value_compare`로 제공합니다.
+
+```cpp
+#include <iostream>
+#include <set>
+using namespace std;
+
+int main()
+{
+	set<int, less<int>> s_less;
+	set<int, greater<int>> s_greater;
+
+	s_less.insert(50);
+	s_less.insert(30);
+	s_less.insert(80);
+
+	s_greater.insert(40);
+	s_greater.insert(10);
+	s_greater.insert(70);
+
+	set<int, less<int>>::key_compare l_cmp = s_less.key_comp();
+	cout << l_cmp(10, 20) << endl; // 10 < 20 연산 => 참
+
+	set<int, greater<int>>::key_compare g_cmp = s_greater.key_comp();
+	cout << g_cmp(10, 20) << endl; // 10 > 20 연산 => 거짓
+
+	cout << "key_compare type: " << typeid(s_less.key_comp()).name() << endl;
+	cout << "key_compare type: " << typeid(s_greater.key_comp()).name() << endl;
+
+	cout << "value_compare type: " << typeid(s_less.value_comp()).name() << endl;
+	cout << "value_compare type: " << typeid(s_greater.value_comp()).name() << endl;
+
+	return 0;
+}
+```
+```
+출력결과
+
+1
+0
+key_compare type: struct std::less<int>
+key_compare type: struct std::greater<int>
+value_compare type: struct std::less<int>
+value_compare type: struct std::greater<int>
+```
