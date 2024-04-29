@@ -175,7 +175,7 @@ int main()
 		cout << *iter << " ";
 	cout << endl;
 
-	lt.remove_if(Predicate); // 조건자가 참임 모든 원소를 제
+	lt.remove_if(Predicate); // 조건자가 참임 모든 원소를 제거
 
 	for (list<int>::iterator iter = lt.begin(); iter != lt.end(); iter++) // 40 50 출력
 		cout << *iter << " ";
@@ -229,9 +229,9 @@ int main()
 
 	list<int>::iterator iter = lt1.begin();
 	iter++;
-	iter++;
+	iter++; // lt1의 30을 가리킴
 
-	lt1.splice(iter, lt2);
+	lt1.splice(iter, lt2); // 🎈🎈iter의 위치(lt1의 30자리)에 lt2를 접착해라
 
 	cout << "lt1: ";
 	for (list<int>::iterator iter = lt1.begin(); iter != lt1.end(); iter++) // 10 20 100 200 300 400 500 30 40 50 출력 <-- 원래 30 자리에 list2를 splice
