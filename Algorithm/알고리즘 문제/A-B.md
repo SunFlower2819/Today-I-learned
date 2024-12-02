@@ -14,7 +14,7 @@
 그러나 소수점 9번째 자리에서 차이가 있더라도 그 차이가 $$10^{-9}$$ 이하라면 정답으로 인정된다는 뜻이다.
 
 
-```cpp
+```cpp 
 #include <iostream>
 using namespace std;
 
