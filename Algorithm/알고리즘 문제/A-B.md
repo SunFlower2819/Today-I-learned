@@ -66,12 +66,12 @@ int main()
 
 아래의 코드를 보자.
 ```cpp
-cout.precision(5);
-cout << 123.456789 << endl;
+std::cout.precision(5);
+std::cout << 123.456789 << std::endl;
 
 
-cout << fixed; // 🎈🎈fixed를 사용하면 소수점 기준으로 동작
-cout << 123.456789 << endl;
+std::cout << std::fixed; // 🎈🎈fixed를 사용하면 소수점 기준으로 동작
+std::cout << 123.456789 << std::endl;
 ```
 
 ```
