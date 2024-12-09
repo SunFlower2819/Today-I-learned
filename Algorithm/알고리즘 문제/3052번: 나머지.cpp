@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 
-int main()
+int main() 
 {
 	// vector에 값을 입력, 그 값을 42로 나눈 값을 벡터에 저장
 	std::vector<int> v(10);
