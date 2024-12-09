@@ -22,10 +22,10 @@ int main()
 
 	for (int i = 1; i < 10; i++)
 	{
-		if (compare != v[i])
+		if (compare != v[i]) // 비교했다가 배열의 값이 변하면 아래와 같은 수정 단계를 거침
 		{
-			count += 1;
-			compare = v[i];
+			count += 1; // 다른 값 갯수 카운팅
+			compare = v[i]; // 다음 값으로 비교 시작
 		}
 	}
 
